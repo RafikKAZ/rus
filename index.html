@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Заявка на подключение</title>
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=29954df2-70a5-4786-a0ad-417a1b83ef95&lang=ru_RU"></script>
+  <link rel="stylesheet" href="styles.css?v=7" />
+</head>
+<body>
+  <h1 class="centered-title">Оставить заявку на подключение</h1>
+  <div class="info-text">
+    <p>
+      Если Вашего дома нет в списке, значит Вам сейчас нельзя подключить наш
+      скоростной домашний интернет по оптоволокну. Но это временно.  
+      Оставьте заявку, и если заявок из Вашего ЖК будет много, мы пересмотрим график подключений.
+    </p>
+  </div>
+
+  <form id="submissionForm">
+    <label for="city">Город:</label>
+    <select id="city" name="city" required>
+      <option value="Абай">Абай</option>
+<option value="Абай (Алм.обл.)">Абай (Алм.обл.)</option>
+<option value="Аксай">Аксай</option>
+<option value="Актау">Актау</option>
+<option value="Актобе">Актобе</option>
+<option value="Алматы">Алматы</option>
+<option value="Аса">Аса</option>
+<option value="Астана">Астана</option>
+<option value="Атамекен">Атамекен</option>
+<option value="Атырау">Атырау</option>
+<option value="Балхаш">Балхаш</option>
+<option value="Баскудук">Баскудук</option>
+<option value="Бектобе">Бектобе</option>
+<option value="Белбулак">Белбулак</option>
+<option value="Боралдай">Боралдай</option>
+<option value="Булакты (Алм.обл.)">Булакты (Алм.обл.)</option>
+<option value="Гульдала">Гульдала</option>
+<option value="Жанаозен">Жанаозен</option>
+<option value="Жезказган">Жезказган</option>
+<option value="Житикара">Житикара</option>
+<option value="Кандыагаш">Кандыагаш</option>
+<option value="Караганда">Караганда</option>
+<option value="Каскелен">Каскелен</option>
+<option value="Кокшетау">Кокшетау</option>
+<option value="Конаев">Конаев</option>
+<option value="Костанай">Костанай</option>
+<option value="Кызылорда">Кызылорда</option>
+<option value="Лисаковск">Лисаковск</option>
+<option value="Мангистау">Мангистау</option>
+<option value="Отеген Батыр">Отеген Батыр</option>
+<option value="Павлодар">Павлодар</option>
+<option value="Петропавловск">Петропавловск</option>
+<option value="Риддер">Риддер</option>
+<option value="Рудный">Рудный</option>
+<option value="Сатпаев">Сатпаев</option>
+<option value="Семей">Семей</option>
+<option value="Степногорск">Степногорск</option>
+<option value="Талдыкорган">Талдыкорган</option>
+<option value="Тараз">Тараз</option>
+<option value="Темиртау">Темиртау</option>
+<option value="Туздыбастау">Туздыбастау</option>
+<option value="Туркестан">Туркестан</option>
+<option value="Узынагаш">Узынагаш</option>
+<option value="Ульгули(Жамб.обл.)">Ульгули(Жамб.обл.)</option>
+<option value="Уральск">Уральск</option>
+<option value="Усть-Каменогорск">Усть-Каменогорск</option>
+<option value="Хромтау">Хромтау</option>
+<option value="Шахтинск">Шахтинск</option>
+<option value="Шу">Шу</option>
+<option value="Шымкент">Шымкент</option>
+<option value="Щучинск">Щучинск</option>
+<option value="Экибастуз">Экибастуз</option>
+    </select>
+
+    <label for="name">ФИО:</label>
+    <input type="text" id="name" name="name" required placeholder="Например: Иванов Айдар" pattern="^[А-Яа-яЁёӘәӨөҚқҢңҰұҮүҺһІі\s\-]+$" title="Только буквы, пробелы и дефис"/>
+
+    <label for="phone">Контактный номер:</label>
+    <input type="text" maxlength="11" id="phone" name="phone" required placeholder="Например: 87771234567" pattern="8\d{10}" title="Введите номер из 11 цифр, начиная с 8 (например: 877771234567)" />
+
+    <label for="housing">Тип жилья:</label>
+    <select id="housing" name="housing" required>
+      <option value="">Выберите тип жилья</option>
+      <option value="Квартира">Квартира</option>
+      <option value="Частный дом">Частный дом</option>
+    </select>
+
+    <input type="text" id="address" name="address" readonly required style="display: none" />
+    <input type="text" id="coordinates" name="coordinates" readonly required style="display: none" />
+    <input type="hidden" id="detected_city" name="detected_city" />
+
+    <p class="map-instruction">Выберите город, затем нажмите на нужное место на карте или воспользуйтесь поиском.</p>
+    <p class="geo-hint">📍 Вы можете включить геолокацию — карта покажет ваше местоположение, а адрес заполнится автоматически.</p>
+    <p id="selected-address" class="address-preview">Адрес не выбран</p>
+
+    <div id="map"></div>
+    <div id="confirmation" class="confirmation hidden">Адрес успешно выбран ✅</div>
+
+    <button type="submit">Отправить заявку</button>
+  </form>
+
+  <script src="script.js?v=7"></script>
+</body>
+</html>
